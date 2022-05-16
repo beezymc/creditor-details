@@ -1,4 +1,7 @@
-# Getting Started with Create React App
+# React App Template
+Template to create React projects, reorganized for greater separation of concerns.
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
