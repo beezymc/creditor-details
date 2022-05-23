@@ -6,7 +6,7 @@ const Creditor = ({ creditorInfo, handleCheck }) => {
   return(
     <div className='dataRow'>
       <div className='checkContainer'>
-        <input type='checkbox' checked={isChecked} onClick={() => handleCheck(id)}/>
+        <input type='checkbox' checked={isChecked} onChange={() => handleCheck(id)}/>
       </div>
       <div className='creditorData'>
         {creditorName}
@@ -18,10 +18,10 @@ const Creditor = ({ creditorInfo, handleCheck }) => {
         {lastName}
       </div>
       <div className='minPaymentData'>
-        {minPaymentPercentage}
+        {minPaymentPercentage.toFixed(2)}%
       </div>
       <div className='balanceData'>
-        {balance}
+        {balance.toFixed(2)}
       </div>
     </div>
   )

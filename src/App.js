@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Creditor from './components/Creditor.jsx'
-import { creditorsDecorator, calcTotal } from './utils.js'
+import { creditorsDecorator, calcTotal, formatToUSD } from './utils.js'
 import './css/app.css'
 const App = () => {
   const [creditors, setCreditors] = useState([]);
@@ -37,15 +37,9 @@ const App = () => {
     };
     creditorsCopy.push(newCreditor);
     setCreditors(creditorsCopy);
-    setRowCount((state) => ({
-      rowCount: state.rowCount + 1
-    }));
-    setCheckCount((state) => ({
-      checkCount: state.checkCount + 1
-    }));
-    setTotal((state) => ({
-      total: state.total + newCreditor.balance
-    }));
+    setRowCount(rowCount + 1);
+    setCheckCount(checkCount + 1);
+    setTotal(total + newCreditor.balance);
   }
 
   const removeDebt = () => {
@@ -53,16 +47,10 @@ const App = () => {
       const creditorsCopy = [...creditors];
       const removedCreditor = creditorsCopy.pop();
       setCreditors(creditorsCopy);
-      setRowCount((state) => ({
-        rowCount: state.rowCount - 1
-      }));
+      setRowCount(rowCount - 1);
       if (removedCreditor.isChecked) {
-        setCheckCount((state) => ({
-          checkCount: state.checkCount - 1
-        }));
-        setTotal((state) => ({
-          total: state.total - removedCreditor.balance
-        }));
+        setCheckCount(checkCount - 1);
+        setTotal(total - removedCreditor.balance);
       }
     }
   };
@@ -72,19 +60,11 @@ const App = () => {
     for (let i = 0; i < creditorsCopy.length; i++) {
       if (id === creditorsCopy[i].id) {
         if (creditorsCopy[i].isChecked) {
-          setTotal((state) => ({
-            total: state.total - creditorsCopy[i].balance
-          }));
-          setCheckCount((state) => ({
-            checkCount: state.checkCount - 1
-          }));
+          setTotal(total - creditorsCopy[i].balance);
+          setCheckCount(checkCount - 1);
         } else {
-          setTotal((state) => ({
-            total: state.total + creditorsCopy[i].balance
-          }));
-          setCheckCount((state) => ({
-            checkCount: state.checkCount + 1
-          }));
+          setTotal(total + creditorsCopy[i].balance);
+          setCheckCount(checkCount + 1);
         }
         creditorsCopy[i].isChecked = !creditorsCopy[i].isChecked;
         break;
@@ -102,6 +82,7 @@ const App = () => {
   return (
     <div className='main'>
       <div className='titleRow'>
+        <div className='checkContainer' />
         <div className='creditorTitle'>
           Creditor
         </div>
@@ -122,21 +103,21 @@ const App = () => {
         <Creditor key={creditor.id} creditorInfo={creditor} handleCheck={handleCheck}/>
       ))}
       <div className='buttonsContainer'>
-        <button onClick={addDebt}>Add Debt</button>
-        <button onClick={removeDebt}>Remove Debt</button>
+        <button className='buttonStyle' onClick={addDebt}>Add Debt</button>
+        <button className='buttonStyle' onClick={removeDebt}>Remove Debt</button>
       </div>
       <div className='totalRow'>
-        <div className='totalText'>
+        <div>
           Total
         </div>
-        <div className='totalValue'>
-          {total}
+        <div>
+          {formatToUSD(total)}
         </div>
       </div>
       <div className='rowCountContainer'>
         <div className='totalRowCountContainer'>
           <div className='totalRowCountTitle'>
-            Total Row Count:
+            Total Row Count :
           </div>
           <div className='totalRowCountValue'>
             {rowCount}
@@ -144,7 +125,7 @@ const App = () => {
         </div>
         <div className='checkCountContainer'>
           <div className='checkCountTitle'>
-            Check Row Count:
+            Check Row Count :
           </div>
           <div className='checkCountValue'>
             {checkCount}

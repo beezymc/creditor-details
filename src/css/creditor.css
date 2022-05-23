@@ -1,0 +1,59 @@
+.dataRow {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.checkContainer {
+  display: flex;
+  width: 139px;
+  align-items: center;
+  justify-content: center;
+}
+
+.creditorData {
+  display: flex;
+  text-align: left;
+  border: 1px solid black;
+  margin: 1px 1px 1px 1px;
+  align-items: center;
+  width: 43%;
+}
+
+.firstNameData {
+  display: flex;
+  flex-wrap: nowrap;
+  text-align: left;
+  border: 1px solid black;
+  margin: 1px 1px 1px 1px;
+  align-items: center;
+  width: 34%;
+}
+
+.lastNameData {
+  display: flex;
+  flex-wrap: nowrap;
+  text-align: left;
+  border: 1px solid black;
+  margin: 1px 1px 1px 1px;
+  align-items: center;
+  width: 34%;
+}
+
+.minPaymentData {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 23%;
+  border: 1px solid black;
+  margin: 1px 1px 1px 1px;
+  align-items: center;
+}
+
+.balanceData {
+  display: flex;
+  width: 35%;
+  border: 1px solid black;
+  margin: 1px 1px 1px 1px;
+  align-items: center;
+  flex-direction: row-reverse;
+}
