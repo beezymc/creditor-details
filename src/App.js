@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 import Creditor from './components/Creditor.jsx'
 import { creditorsDecorator, calcTotal, formatToUSD } from './utils.js'
 import './css/app.css'
@@ -27,7 +28,7 @@ const App = () => {
   const addDebt = () => {
     const creditorsCopy = [...creditors];
     const newCreditor = {
-      id: creditorsCopy[creditorsCopy.length - 1]?.id + 1 || 1,
+      id: uuidv4(),
       balance: 3000,
       creditorName: 'Test',
       firstName: 'Test',
@@ -74,10 +75,18 @@ const App = () => {
   };
 
   if (error) return (
-    <div>
+    <div className='error'>
       <img src='https://ubiq.co/tech-blog/wp-content/uploads/2020/08/apache-500-internal-server-error.png' alt='Error Code 500. Server Error' />
     </div>
   );
+
+  if (!creditors.length) {
+    return(
+      <div className='error'>
+      <img src='https://pbs.twimg.com/media/BxMahnnCYAA_nIw?format=png&name=large' alt='Loading' />
+    </div>
+    )
+  }
 
   return (
     <div className='main'>
@@ -99,18 +108,18 @@ const App = () => {
           Balance
         </div>
       </div>
-      {creditors.map((creditor) => (
-        <Creditor key={creditor.id} creditorInfo={creditor} handleCheck={handleCheck}/>
+      {creditors.map((creditor, index) => (
+        <Creditor index={index} key={creditor.id} creditorInfo={creditor} handleCheck={handleCheck}/>
       ))}
       <div className='buttonsContainer'>
-        <button className='buttonStyle' onClick={addDebt}>Add Debt</button>
-        <button className='buttonStyle' onClick={removeDebt}>Remove Debt</button>
+        <button className='buttonStyle' data-testid='addDebt' onClick={addDebt}>Add Debt</button>
+        <button className='buttonStyle' data-testid='removeDebt' onClick={removeDebt}>Remove Debt</button>
       </div>
       <div className='totalRow'>
         <div>
           Total
         </div>
-        <div>
+        <div data-testid='totalCount'>
           {formatToUSD(total)}
         </div>
       </div>
@@ -119,7 +128,7 @@ const App = () => {
           <div className='totalRowCountTitle'>
             Total Row Count :
           </div>
-          <div className='totalRowCountValue'>
+          <div className='totalRowCountValue' data-testid='rowCount'>
             {rowCount}
           </div>
         </div>
@@ -127,7 +136,7 @@ const App = () => {
           <div className='checkCountTitle'>
             Check Row Count :
           </div>
-          <div className='checkCountValue'>
+          <div className='checkCountValue' data-testid='checkCount'>
             {checkCount}
           </div>
         </div>
