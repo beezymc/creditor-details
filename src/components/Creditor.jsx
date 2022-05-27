@@ -11,6 +11,7 @@ const Creditor = ({ creditorInfo, handleCheck, index }) => {
     minPaymentPercentage,
     isChecked,
   } = creditorInfo;
+
   return (
     <div className="dataRow">
       <div className="checkContainer">

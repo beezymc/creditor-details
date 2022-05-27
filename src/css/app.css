@@ -53,7 +53,7 @@
 
 .minPayTitle {
   display: flex;
-  text-align: right;
+  flex-direction: row-reverse;
   font-weight: 700;
   width: 23%;
   border: 2px solid black;
