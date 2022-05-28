@@ -200,6 +200,21 @@ describe("React Tests", () => {
     });
   });
 
+  test("If data fetched from the server is empty, and the Add Debt button is clicked, the 'Remove Debt' button will be enabled.", async () => {
+    jest.spyOn(axios, "get").mockResolvedValueOnce({ data: [] });
+    render(<App />);
+    await screen.findByTestId("removeDebt");
+    const removeDebtButton = screen.getByTestId("removeDebt");
+    await waitFor(() => {
+      expect(removeDebtButton.disabled).toBe(true);
+    });
+    const addDebtButton = screen.getByTestId("addDebt");
+    fireEvent.click(addDebtButton);
+    await waitFor(() => {
+      expect(removeDebtButton.disabled).toBe(false);
+    });
+  });
+
   test("If a user clicks the Remove Debt button when the last row *is* checked, the last row is deleted, total row count is decremented, check row count is decremented, and the row's balance is removed from the prior total.", async () => {
     jest.spyOn(axios, "get").mockResolvedValueOnce(mockResponse);
     render(<App />);
